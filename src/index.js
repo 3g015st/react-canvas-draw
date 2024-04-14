@@ -53,6 +53,7 @@ export default class CanvasDraw extends PureComponent {
     saveData: PropTypes.string,
     immediateLoading: PropTypes.bool,
     hideInterface: PropTypes.bool,
+    erase: PropTypes.bool,
     gridSizeX: PropTypes.number,
     gridSizeY: PropTypes.number,
     gridLineWidth: PropTypes.number,
@@ -81,6 +82,7 @@ export default class CanvasDraw extends PureComponent {
     saveData: "",
     immediateLoading: false,
     hideInterface: false,
+    erase: false,
     gridSizeX: 25,
     gridSizeY: 25,
     gridLineWidth: 0.5,
@@ -541,7 +543,8 @@ export default class CanvasDraw extends PureComponent {
   drawPoints = ({ points, brushColor, brushRadius }) => {
     this.ctx.temp.lineJoin = "round";
     this.ctx.temp.lineCap = "round";
-    this.ctx.temp.strokeStyle = brushColor;
+    this.ctx.temp.strokeStyle = brushColor === "#ffffff" ? "#dbb7bb" : brushColor;
+    this.ctx.drawing.globalCompositeOperation = brushColor === "#ffffff" ? "destination-out" : "source-over";
 
     this.clearWindow(this.ctx.temp);
     this.ctx.temp.lineWidth = brushRadius * 2;
