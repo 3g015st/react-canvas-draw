@@ -2,7 +2,6 @@ const TOUCH_SLOP = 10;
 const PINCH_TIMEOUT_MS = 250;
 const SUPPRESS_SCROLL = (e) => {
   // No zooming while drawing, but we'll cancel the scroll event.
-  e.preventDefault();
   return this;
 };
 
@@ -16,7 +15,6 @@ export class DefaultState {
     if (disabled ) {
       return new DisabledState();
     } else if (enablePanAndZoom && e.ctrlKey) {
-      e.preventDefault();
       canvasDraw.coordSystem.scaleAtClientPoint(mouseZoomFactor * e.deltaY, clientPointFromEvent(e));
     }
     return this;
@@ -95,8 +93,6 @@ export class PanState {
   handleMouseWheel = SUPPRESS_SCROLL.bind(this);
 
   handleDrawStart = (e, canvasDraw) => {
-    e.preventDefault();
-
     this.dragStart = clientPointFromEvent(e);
     this.panStart = { x: canvasDraw.coordSystem.x, y: canvasDraw.coordSystem.y };
 
@@ -104,8 +100,6 @@ export class PanState {
   };
 
   handleDrawMove = (e, canvasDraw) => {
-    e.preventDefault();
-
     const { clientX, clientY } = clientPointFromEvent(e);
     const dx = clientX - this.dragStart.clientX;
     const dy = clientY - this.dragStart.clientY;
@@ -134,8 +128,7 @@ export class WaitForPinchState {
 
   handleDrawStart  = (e, canvasDraw) => {
     const { enablePanAndZoom } = canvasDraw.props;
-    e.preventDefault();
-
+    
     // We're going to transition immediately into lazy-drawing mode if
     // pan-and-zoom isn't enabled or if this event wasn't triggered by a touch.
     if (!e.touches || !e.touches.length || !enablePanAndZoom) {
@@ -151,8 +144,6 @@ export class WaitForPinchState {
   };
 
   handleDrawMove = (e, canvasDraw) => {
-    e.preventDefault();
-
     // If we have two touches, move to pinch/pan (we don't have to recheck
     // whether zoom is enabled because that happend in draw start).
     if (e.touches && e.touches.length >= 2) {
@@ -214,7 +205,6 @@ export class ScaleOrPanState {
   handleMouseWheel = SUPPRESS_SCROLL.bind(this);
 
   handleDrawStart = (e, canvasDraw) => {
-    e.preventDefault();
     if (!e.touches || e.touches.length < 2) {
       return new DefaultState();
     }
@@ -225,7 +215,6 @@ export class ScaleOrPanState {
   };
 
   handleDrawMove = (e, canvasDraw) => {
-    e.preventDefault();
     if (!e.touches || e.touches.length < 2) {
       return new DefaultState();
     }
@@ -280,7 +269,6 @@ export class TouchPanState {
   handleDrawStart = () => this;
 
   handleDrawMove = (e, canvasDraw) => {
-    e.preventDefault();
     if (!e.touches || e.touches.length < 2) {
       return new DefaultState();
     }
@@ -311,7 +299,6 @@ export class TouchScaleState {
   handleDrawStart = () => this;
 
   handleDrawMove = (e, canvasDraw) => {
-    e.preventDefault();
     if (!e.touches || e.touches.length < 2) {
       return new DefaultState();
     }
@@ -340,8 +327,6 @@ export class DrawingState {
   handleMouseWheel = SUPPRESS_SCROLL.bind(this);
 
   handleDrawStart = (e, canvasDraw) => {
-    e.preventDefault();
-
     if (e.touches && e.touches.length) {
       // on touch, set catenary position to touch pos
       const { x, y } = viewPointFromEvent(canvasDraw.coordSystem, e);
@@ -352,8 +337,6 @@ export class DrawingState {
   };
 
   handleDrawMove = (e, canvasDraw) => {
-    e.preventDefault();
-
     const { x, y } = viewPointFromEvent(canvasDraw.coordSystem, e);
     canvasDraw.lazy.update({ x, y });
     const isDisabled = !canvasDraw.lazy.isEnabled();
@@ -378,8 +361,6 @@ export class DrawingState {
   };
 
   handleDrawEnd = (e, canvasDraw) => {
-    e.preventDefault();
-
     // Draw to this end pos
     this.handleDrawMove(e, canvasDraw);
     canvasDraw.saveLine();
