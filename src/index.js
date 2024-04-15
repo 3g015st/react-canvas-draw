@@ -405,24 +405,20 @@ export default class CanvasDraw extends PureComponent {
   ///// Event Handlers
 
   handleWheel = (e) => {
-    e.preventDefault()
     this.interactionSM = this.interactionSM.handleMouseWheel(e, this);
   };
 
   handleDrawStart = (e) => {
-    e.preventDefault()
     this.interactionSM = this.interactionSM.handleDrawStart(e, this);
     this.mouseHasMoved = true;
   };
 
   handleDrawMove = (e) => {
-    e.preventDefault()
     this.interactionSM = this.interactionSM.handleDrawMove(e, this);
     this.mouseHasMoved = true;
   };
 
   handleDrawEnd = (e) => {
-    e.preventDefault()
     this.interactionSM = this.interactionSM.handleDrawEnd(e, this);
     this.mouseHasMoved = true;
   };
