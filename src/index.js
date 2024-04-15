@@ -179,7 +179,7 @@ export default class CanvasDraw extends PureComponent {
     // Get a reference to the "drawing" layer of the canvas
     let canvasToExport = this.canvas.drawing;
 
-    let context = canvasToExport.getContext("2d");
+    let context = canvasToExport.getContext("2d", { willReadFrequently: true });
 
     //cache height and width
     let width = canvasToExport.width;
