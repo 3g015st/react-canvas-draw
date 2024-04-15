@@ -375,8 +375,6 @@ export class SyntheticEvent {
     this.clientY = clientY;
     this.touches = [ { clientX, clientY } ];
   }
-
-  preventDefault = () => {};
 }
 
 export function clientPointFromEvent(e) {
