@@ -4,7 +4,7 @@ let passiveSupported = false;
 try {
   const options = {
     get passive() {
-      passiveSupported = true;
+      passiveSupported = false;
       return false;
     }
   };
