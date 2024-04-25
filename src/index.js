@@ -200,9 +200,9 @@ export default class CanvasDraw extends PureComponent {
 
       // Write the background image
       this.drawImage();
-    } else if (backgroundColour != null) {
+    } else if (backgroundColor != null) {
       //set background color
-      context.fillStyle = backgroundColour;
+      context.fillStyle = backgroundColor;
 
       //fill entire canvas with background colour
       context.fillRect(0, 0, width, height);
