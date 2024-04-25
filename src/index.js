@@ -175,7 +175,7 @@ export default class CanvasDraw extends PureComponent {
    * @param {bool} useBgImage Specifies whether the canvas' current background image should also be exported. Default is false.
    * @param {string} backgroundColour The desired background colour hex code, e.g. "#ffffff" for white.
    */
-  getDataURL = (fileType, useBgImage, backgroundColour) => {
+  getDataURL = (fileType, useBgImage, backgroundColor) => {
     // Get a reference to the "drawing" layer of the canvas
     let canvasToExport = this.canvas.drawing;
 
